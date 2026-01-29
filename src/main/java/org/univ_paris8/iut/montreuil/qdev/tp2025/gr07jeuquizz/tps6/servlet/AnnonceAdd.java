@@ -55,7 +55,7 @@ public class AnnonceAdd extends HttpServlet {
             // Créer l'objet Annonce
             Annonce annonce = new Annonce(title, description, adress, mail);
 
-            // Enregistrer en base
+
             boolean success = annonceDAO.create(annonce);
 
             if (success) {
