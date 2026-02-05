@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Connection;
-
+/*
 @WebServlet("/AnnonceAdd")
 public class AnnonceAdd extends HttpServlet {
 
@@ -73,3 +73,4 @@ public class AnnonceAdd extends HttpServlet {
         }
     }
 }
+*/

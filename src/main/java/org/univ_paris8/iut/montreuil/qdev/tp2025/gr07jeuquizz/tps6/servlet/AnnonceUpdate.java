@@ -1,5 +1,5 @@
 package org.univ_paris8.iut.montreuil.qdev.tp2025.gr07jeuquizz.tps6.servlet;
-
+/*
 import org.univ_paris8.iut.montreuil.qdev.tp2025.gr07jeuquizz.tps6.DAO.AnnonceDAO;
 import org.univ_paris8.iut.montreuil.qdev.tp2025.gr07jeuquizz.tps6.db.ConnectionDB;
 import org.univ_paris8.iut.montreuil.qdev.tp2025.gr07jeuquizz.tps6.model.Annonce;
@@ -57,6 +57,7 @@ public class AnnonceUpdate extends HttpServlet {
     /**
      * Mettre à jour l'annonce
      */
+/*
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -116,4 +117,4 @@ public class AnnonceUpdate extends HttpServlet {
             response.sendRedirect("AnnonceList");
         }
     }
-}
+}*/

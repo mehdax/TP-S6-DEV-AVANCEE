@@ -1,31 +1,94 @@
 package org.univ_paris8.iut.montreuil.qdev.tp2025.gr07jeuquizz.tps6.model;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.sql.Timestamp;
+import javax.persistence.*;
+import javax.validation.constraints.*;
+import java.time.LocalDateTime;
 
-
+@Entity
+@Table(name="Annonce")
 public class Annonce {
 
-    private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @NotBlank
+    @Size(min = 3, max = 64)
+    @Column(nullable = false, length = 64)
     private String title;
+
+    @NotBlank
+    @Size(min = 10, max = 256)
+    @Column(nullable = false, length = 256)
     private String description;
+
+    @NotBlank
+    @Size(max = 64)
+    @Column(nullable = false, length = 64)
     private String adress;
+
+    @NotBlank
+    @Email
+    @Column(nullable = false, length = 64)
     private String mail;
-    private Timestamp date;
 
+    @Column(nullable = false)
+    private LocalDateTime date;
 
-    public Annonce() {
-    }
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 20)
+    private AnnonceStatus status = AnnonceStatus.DRAFT;
 
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "author_id", nullable = false)
+    private User author;
+
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "category_id", nullable = false)
+    private Category category;
 
     public Annonce(int id, String title, String description, String adress, String mail, Timestamp date) {
-        this.id = id;
-        this.title = title;
-        this.description = description;
-        this.adress = adress;
-        this.mail = mail;
-        this.date = date;
     }
 
+
+    @PrePersist
+    protected void onCreate() {
+        if (this.date == null) {
+            this.date = LocalDateTime.now();
+        }
+        if (this.status == null) {
+            this.status = AnnonceStatus.DRAFT;
+        }
+    }
+
+
+    public void publish() {
+        if (this.status == AnnonceStatus.DRAFT) {
+            this.status = AnnonceStatus.PUBLISHED;
+        } else {
+            throw new IllegalStateException("Seules les annonces en brouillon peuvent être publiées");
+        }
+    }
+
+
+    public void archive() {
+        if (this.status == AnnonceStatus.PUBLISHED) {
+            this.status = AnnonceStatus.ARCHIVED;
+        } else {
+            throw new IllegalStateException("Seules les annonces publiées peuvent être archivées");
+        }
+    }
+
+
+    public boolean isPublished() {
+        return this.status == AnnonceStatus.PUBLISHED;
+    }
 
     public Annonce(String title, String description, String adress, String mail) {
         this.title = title;
@@ -34,13 +97,17 @@ public class Annonce {
         this.mail = mail;
     }
 
+    public Annonce() {
+
+    }
+
     // Getters et Setters
     public int getId() {
-        return id;
+        return id.intValue();
     }
 
     public void setId(int id) {
-        this.id = id;
+        this.id = (long) id;
     }
 
     public String getTitle() {
@@ -75,12 +142,12 @@ public class Annonce {
         this.mail = mail;
     }
 
-    public Timestamp getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 
     public void setDate(Timestamp date) {
-        this.date = date;
+        this.date = date.toLocalDateTime();
     }
 
     @Override
@@ -94,5 +161,34 @@ public class Annonce {
                 ", date=" + date +
                 '}';
     }
+
+
+    public void setStatus(AnnonceStatus status) {
+        this.status = status;
+    }
+
+    public AnnonceStatus getStatus() {
+        return status;
+    }
+
+    public void setAuthor(User author) {
+        this.author = author;
+    }
+
+    public User getAuthor() {
+        return author;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+
+
+
 }
 
