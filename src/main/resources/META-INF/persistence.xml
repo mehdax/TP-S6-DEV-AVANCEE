@@ -7,15 +7,15 @@
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
         <properties>
-            <!-- Configuration BDD PostgreSQL -->
+            <!-- Configuration BDD PostgreSQL LOCAL -->
             <property name="javax.persistence.jdbc.url"
-                      value="jdbc:postgresql://database-etudiants.iut.univ-paris8.fr/mbenali"/>
+                      value="jdbc:postgresql://localhost:5432/masterannonce"/>
             <property name="javax.persistence.jdbc.driver"
                       value="org.postgresql.Driver"/>
             <property name="javax.persistence.jdbc.user"
-                      value="mbenali"/>
+                      value="postgres"/>
             <property name="javax.persistence.jdbc.password"
-                      value="Mehdy123"/>
+                      value="123"/>
 
             <!-- Dialecte PostgreSQL -->
             <property name="hibernate.dialect"

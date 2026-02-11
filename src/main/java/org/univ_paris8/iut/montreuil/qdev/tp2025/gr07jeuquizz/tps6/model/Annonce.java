@@ -5,7 +5,7 @@ import javax.persistence.Table;
 import java.sql.Timestamp;
 import javax.persistence.*;
 import javax.validation.constraints.*;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
 @Table(name="Annonce")
@@ -36,7 +36,8 @@ public class Annonce {
     private String mail;
 
     @Column(nullable = false)
-    private LocalDateTime date;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date date;
 
     @NotNull
     @Enumerated(EnumType.STRING)
@@ -60,7 +61,7 @@ public class Annonce {
     @PrePersist
     protected void onCreate() {
         if (this.date == null) {
-            this.date = LocalDateTime.now();
+            this.date = new Date();
         }
         if (this.status == null) {
             this.status = AnnonceStatus.DRAFT;
@@ -142,12 +143,12 @@ public class Annonce {
         this.mail = mail;
     }
 
-    public LocalDateTime getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(Timestamp date) {
-        this.date = date.toLocalDateTime();
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     @Override

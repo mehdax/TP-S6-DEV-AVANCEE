@@ -16,11 +16,23 @@ public class AnnonceDAO extends GenericDAO<Annonce> {
     }
 
     /**
+     * Récupérer une annonce par ID avec ses relations (author et category)
+     */
+    public Annonce findByIdWithRelations(Long id) {
+        List<Annonce> results = em.createQuery(
+                        "SELECT DISTINCT a FROM Annonce a LEFT JOIN FETCH a.author LEFT JOIN FETCH a.category WHERE a.id = :id",
+                        Annonce.class)
+                .setParameter("id", id)
+                .getResultList();
+        return results.isEmpty() ? null : results.get(0);
+    }
+
+    /**
      * Trouver toutes les annonces par statut
      */
     public List<Annonce> findByStatus(AnnonceStatus status) {
         return em.createQuery(
-                        "SELECT a FROM Annonce a WHERE a.status = :status ORDER BY a.date DESC",
+                        "SELECT DISTINCT a FROM Annonce a LEFT JOIN FETCH a.author LEFT JOIN FETCH a.category WHERE a.status = :status ORDER BY a.date DESC",
                         Annonce.class)
                 .setParameter("status", status)
                 .getResultList();
@@ -95,7 +107,7 @@ public class AnnonceDAO extends GenericDAO<Annonce> {
      */
     public List<Annonce> findPublishedPaginated(int page, int pageSize) {
         return em.createQuery(
-                        "SELECT a FROM Annonce a WHERE a.status = :status ORDER BY a.date DESC",
+                        "SELECT DISTINCT a FROM Annonce a LEFT JOIN FETCH a.author LEFT JOIN FETCH a.category WHERE a.status = :status ORDER BY a.date DESC",
                         Annonce.class)
                 .setParameter("status", AnnonceStatus.PUBLISHED)
                 .setFirstResult(page * pageSize)

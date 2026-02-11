@@ -220,7 +220,8 @@ public class AnnonceService {
 
         try {
             AnnonceDAO annonceDAO = new AnnonceDAO(em);
-            return annonceDAO.findById(id);
+            Annonce annonce = annonceDAO.findByIdWithRelations(id);
+            return Optional.ofNullable(annonce);
         } finally {
             em.close();
         }
