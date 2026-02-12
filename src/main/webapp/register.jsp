@@ -6,27 +6,21 @@
     <meta charset="UTF-8">
     <title>Inscription - MasterAnnonce</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
             display: flex;
             justify-content: center;
             align-items: center;
+            min-height: 100vh;
             padding: 20px;
+            margin: 0;
         }
 
         .card {
             background: white;
-            padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 10px 50px rgba(0, 0, 0, 0.2);
+            padding: 30px;
+            border: 1px solid #ddd;
             max-width: 400px;
             width: 100%;
         }
@@ -34,17 +28,17 @@
         .card h1 {
             color: #333;
             text-align: center;
-            margin-bottom: 30px;
-            font-size: 2em;
+            margin-bottom: 20px;
+            font-size: 1.8em;
         }
 
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
 
         label {
             display: block;
-            margin-bottom: 8px;
+            margin-bottom: 5px;
             color: #333;
             font-weight: bold;
         }
@@ -53,73 +47,60 @@
         input[type="email"],
         input[type="password"] {
             width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
+            padding: 10px;
+            border: 1px solid #ccc;
             font-size: 1em;
-            transition: border-color 0.3s ease;
-        }
-
-        input[type="text"]:focus,
-        input[type="email"]:focus,
-        input[type="password"]:focus {
-            outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 5px rgba(102, 126, 234, 0.3);
+            box-sizing: border-box;
         }
 
         .btn {
             width: 100%;
-            padding: 12px;
-            background-color: #667eea;
+            padding: 10px;
+            background-color: #0066cc;
             color: white;
             border: none;
-            border-radius: 5px;
+            cursor: pointer;
             font-size: 1em;
             font-weight: bold;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
         }
 
         .btn:hover {
-            background-color: #5568d3;
+            background-color: #0052a3;
         }
 
         .error {
-            background-color: #f8d7da;
-            color: #721c24;
-            padding: 12px;
-            border-radius: 5px;
+            background-color: #ffcccc;
+            color: #cc0000;
+            padding: 10px;
             margin-bottom: 20px;
-            border: 1px solid #f5c6cb;
+            border: 1px solid #cc0000;
         }
 
         .links {
             text-align: center;
-            margin-top: 20px;
+            margin-top: 15px;
             color: #666;
         }
 
         .links a {
-            color: #667eea;
-            text-decoration: none;
+            color: #0066cc;
+            text-decoration: underline;
         }
 
         .links a:hover {
-            text-decoration: underline;
+            color: #0052a3;
         }
 
         .back-link {
             display: block;
-            text-align: center;
-            color: #667eea;
-            text-decoration: none;
+            color: #0066cc;
+            text-decoration: underline;
             margin-bottom: 20px;
             font-weight: bold;
         }
 
         .back-link:hover {
-            text-decoration: underline;
+            color: #0052a3;
         }
     </style>
 </head>
@@ -127,7 +108,7 @@
     <div class="card">
         <a href="index.jsp" class="back-link">← Retour à l'accueil</a>
 
-        <h1>📝 Inscription</h1>
+        <h1>Inscription</h1>
 
         <c:if test="${not empty error}">
             <div class="error">${error}</div>

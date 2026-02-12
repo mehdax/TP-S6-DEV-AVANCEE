@@ -6,142 +6,124 @@
     <meta charset="UTF-8">
     <title>Modifier une annonce - MasterAnnonce</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
             padding: 20px;
+            margin: 0;
         }
-
+        
         .container {
             max-width: 600px;
             margin: 0 auto;
             background: white;
-            padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 10px 50px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            border: 1px solid #ddd;
         }
-
+        
         h1 {
             color: #333;
             margin-bottom: 10px;
-            font-size: 2em;
         }
-
+        
         .subtitle {
             color: #666;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
         }
-
+        
         .form-group {
-            margin-bottom: 25px;
+            margin-bottom: 15px;
         }
-
+        
         label {
             display: block;
-            margin-bottom: 8px;
-            color: #333;
+            margin-bottom: 5px;
             font-weight: bold;
+            color: #333;
         }
-
+        
         input[type="text"],
         input[type="email"],
         textarea,
         select {
             width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
+            padding: 10px;
+            border: 1px solid #ccc;
             font-size: 1em;
-            font-family: inherit;
-            transition: border-color 0.3s ease;
+            box-sizing: border-box;
         }
-
-        input[type="text"]:focus,
-        input[type="email"]:focus,
-        textarea:focus,
-        select:focus {
-            outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 5px rgba(102, 126, 234, 0.3);
-        }
-
+        
         textarea {
+            min-height: 100px;
             resize: vertical;
-            min-height: 120px;
         }
-
+        
         .helper-text {
-            font-size: 0.85em;
-            color: #888;
-            margin-top: 5px;
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 3px;
         }
-
+        
         .error {
-            background-color: #f8d7da;
-            color: #721c24;
-            padding: 15px;
-            border-radius: 5px;
+            background-color: #ffcccc;
+            color: #cc0000;
+            padding: 10px;
             margin-bottom: 20px;
-            border: 1px solid #f5c6cb;
+            border: 1px solid #cc0000;
         }
-
+        
         .button-group {
             display: flex;
-            gap: 15px;
-            margin-top: 30px;
+            gap: 10px;
+            margin-top: 20px;
         }
-
-        .btn {
+        
+        button {
             flex: 1;
-            padding: 12px;
-            border: none;
-            border-radius: 5px;
-            font-size: 1em;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .btn-submit {
-            background-color: #667eea;
+            background-color: #0066cc;
             color: white;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+            font-size: 1em;
         }
-
-        .btn-submit:hover {
-            background-color: #5568d3;
-            transform: translateY(-2px);
+        
+        button:hover {
+            background-color: #0052a3;
         }
-
+        
         .btn-cancel {
-            background-color: #e0e0e0;
-            color: #333;
+            background-color: #999;
             text-decoration: none;
             display: flex;
             align-items: center;
             justify-content: center;
+            color: white;
         }
-
+        
         .btn-cancel:hover {
-            background-color: #d0d0d0;
+            background-color: #666;
         }
-
+        
         .no-annonce {
             text-align: center;
-            padding: 60px 40px;
-            color: #888;
+            padding: 40px;
+            color: #666;
+        }
+        
+        .no-annonce h2 {
+            color: #333;
+        }
+        
+        .no-annonce a {
+            color: #0066cc;
+            text-decoration: underline;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>✏️ Modifier une annonce</h1>
+        <h1>Modifier une annonce</h1>
         <p class="subtitle">Modifiez les informations de votre annonce</p>
 
         <c:if test="${not empty error}">
@@ -191,8 +173,8 @@
                     </div>
 
                     <div class="button-group">
-                        <button type="submit" class="btn btn-submit">💾 Enregistrer les modifications</button>
-                        <a href="AnnonceList" class="btn btn-cancel">❌ Annuler</a>
+                        <button type="submit" class="btn btn-submit">Enregistrer les modifications</button>
+                        <a href="AnnonceList" class="btn btn-cancel">Annuler</a>
                     </div>
                 </form>
             </c:when>
@@ -206,35 +188,5 @@
             </c:otherwise>
         </c:choose>
     </div>
-</body>
-</html>
-
-                <div class="form-group">
-                    <label for="description">Description *</label>
-                    <textarea id="description" name="description" required maxlength="256"><c:out value="${annonce.description}" /></textarea>
-                </div>
-
-                <div class="form-group">
-                    <label for="adress">Adresse *</label>
-                    <input type="text" id="adress" name="adress" required maxlength="64"
-                           value="<c:out value='${annonce.adress}' />">
-                </div>
-
-                <div class="form-group">
-                    <label for="mail">Email *</label>
-                    <input type="email" id="mail" name="mail" required maxlength="64"
-                           value="<c:out value='${annonce.mail}' />">
-                </div>
-
-                <button type="submit">Enregistrer les modifications</button>
-            </form>
-        </c:when>
-        <c:otherwise>
-            <div class="error">Annonce introuvable</div>
-        </c:otherwise>
-    </c:choose>
-
-    <a href="AnnonceList" class="link-back">← Retour à la liste</a>
-</div>
 </body>
 </html>

@@ -48,6 +48,13 @@ public class AnnonceUpdate extends HttpServlet {
                 if (annonceOpt.isPresent()) {
                     Annonce annonce = annonceOpt.get();
 
+                    // Vérifier que c'est l'auteur
+                    Long userId = (Long) session.getAttribute("userId");
+                    if (!annonce.getAuthor().getId().equals(userId)) {
+                        response.sendRedirect("AnnonceList");
+                        return;
+                    }
+
                     CategoryService categoryService = new CategoryService();
                     List<Category> categories = categoryService.getAllCategories();
 
@@ -109,8 +116,18 @@ public class AnnonceUpdate extends HttpServlet {
                 Long id = Long.parseLong(idParam);
                 Long categoryId = Long.parseLong(categoryIdStr);
 
-                // Mettre à jour via le service
+                // Vérifier que l'utilisateur est l'auteur de cette annonce
                 AnnonceService annonceService = new AnnonceService();
+                Long userId = (Long) session.getAttribute("userId");
+                Optional<Annonce> annonceOpt = annonceService.getAnnonceById(id);
+
+                if (!annonceOpt.isPresent() || !annonceOpt.get().getAuthor().getId().equals(userId)) {
+                    request.setAttribute("error", "Vous n'avez pas l'autorisation de modifier cette annonce");
+                    response.sendRedirect("AnnonceList");
+                    return;
+                }
+
+                // Mettre à jour via le service
                 annonceService.updateAnnonce(id, title, description, adress, mail, categoryId);
 
                 // Rediriger vers la liste

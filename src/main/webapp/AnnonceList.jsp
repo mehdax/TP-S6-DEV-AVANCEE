@@ -8,16 +8,11 @@
     <meta charset="UTF-8">
     <title>Liste des annonces - MasterAnnonce</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: Arial, sans-serif;
             background-color: #f5f5f5;
             padding: 20px;
+            margin: 0;
         }
 
         .container {
@@ -26,33 +21,29 @@
         }
 
         header {
-            background-color: #667eea;
+            background-color: #0066cc;
             color: white;
-            padding: 20px 30px;
-            border-radius: 8px 8px 0 0;
+            padding: 15px 20px;
+            margin-bottom: 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 0;
         }
 
         header h1 {
-            font-size: 2em;
+            margin: 0;
         }
 
         header .user-nav {
             display: flex;
-            gap: 15px;
-            align-items: center;
+            gap: 10px;
         }
 
         header a {
             color: white;
             text-decoration: none;
-            padding: 8px 15px;
+            padding: 5px 10px;
             border: 1px solid white;
-            border-radius: 5px;
-            transition: all 0.3s ease;
         }
 
         header a:hover {
@@ -61,61 +52,54 @@
 
         .controls {
             background-color: white;
-            padding: 20px 30px;
+            padding: 15px 20px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ddd;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid #eee;
+        }
+
+        .controls h2 {
+            margin: 0;
         }
 
         .controls a {
-            background-color: #667eea;
+            background-color: #0066cc;
             color: white;
-            padding: 12px 24px;
+            padding: 8px 15px;
             text-decoration: none;
-            border-radius: 5px;
-            font-weight: bold;
-            transition: all 0.3s ease;
         }
 
         .controls a:hover {
-            background-color: #5568d3;
-            transform: translateY(-2px);
+            background-color: #0052a3;
         }
 
         .success {
-            background-color: #d4edda;
-            color: #155724;
-            padding: 15px;
-            border-radius: 5px;
+            background-color: #ccffcc;
+            color: #008000;
+            padding: 10px;
             margin-bottom: 20px;
-            border: 1px solid #c3e6cb;
+            border: 1px solid #008000;
         }
 
         .error {
-            background-color: #f8d7da;
-            color: #721c24;
-            padding: 15px;
-            border-radius: 5px;
+            background-color: #ffcccc;
+            color: #cc0000;
+            padding: 10px;
             margin-bottom: 20px;
-            border: 1px solid #f5c6cb;
+            border: 1px solid #cc0000;
         }
 
         .annonce-card {
             background-color: white;
-            padding: 25px;
-            margin-bottom: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-        }
-
-        .annonce-card:hover {
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+            padding: 20px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
         }
 
         .annonce-title {
-            font-size: 1.5em;
+            font-size: 1.3em;
             font-weight: bold;
             color: #333;
             margin-bottom: 10px;
@@ -123,49 +107,32 @@
 
         .annonce-description {
             color: #666;
-            margin-bottom: 15px;
-            line-height: 1.6;
+            margin-bottom: 10px;
         }
 
         .annonce-meta {
-            display: flex;
-            gap: 20px;
             font-size: 0.9em;
             color: #888;
-            margin-bottom: 15px;
-            flex-wrap: wrap;
+            margin-bottom: 10px;
         }
 
         .meta-item {
-            display: flex;
-            align-items: center;
-            gap: 5px;
+            margin-right: 20px;
         }
 
         .badge {
             display: inline-block;
-            background-color: #667eea;
+            background-color: #0066cc;
             color: white;
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-size: 0.85em;
-        }
-
-        .status-published {
-            background-color: #28a745;
-        }
-
-        .status-draft {
-            background-color: #ffc107;
-            color: #333;
+            padding: 3px 8px;
+            font-size: 0.9em;
         }
 
         .annonce-footer {
+            border-top: 1px solid #eee;
+            padding-top: 10px;
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            border-top: 1px solid #eee;
-            padding-top: 15px;
         }
 
         .annonce-actions {
@@ -174,81 +141,67 @@
         }
 
         .btn {
-            padding: 8px 15px;
+            padding: 8px 12px;
             text-decoration: none;
-            border-radius: 5px;
             font-size: 0.9em;
-            font-weight: bold;
             cursor: pointer;
-            border: none;
-            transition: all 0.3s ease;
+            border: 1px solid #ccc;
         }
 
         .btn-primary {
-            background-color: #2196F3;
+            background-color: #0066cc;
             color: white;
+            border: none;
         }
 
         .btn-primary:hover {
-            background-color: #0b7dda;
+            background-color: #0052a3;
         }
 
         .btn-warning {
-            background-color: #ffc107;
-            color: #333;
+            background-color: #ff9800;
+            color: white;
+            border: none;
         }
 
         .btn-warning:hover {
-            background-color: #e0a800;
+            background-color: #e68900;
         }
 
         .btn-danger {
-            background-color: #f44336;
+            background-color: #cc0000;
             color: white;
+            border: none;
         }
 
         .btn-danger:hover {
-            background-color: #da190b;
+            background-color: #990000;
         }
 
         .no-annonce {
             text-align: center;
-            padding: 60px 40px;
+            padding: 40px;
             background-color: white;
-            border-radius: 8px;
+            border: 1px solid #ddd;
             color: #888;
-        }
-
-        .no-annonce h2 {
-            color: #333;
-            margin-bottom: 15px;
         }
 
         .pagination {
             text-align: center;
-            margin-top: 30px;
-            display: flex;
-            justify-content: center;
-            gap: 10px;
+            margin-top: 20px;
         }
 
-        .pagination a, .pagination span {
+        .pagination a {
             padding: 8px 12px;
+            margin: 0 5px;
             border: 1px solid #ddd;
-            border-radius: 5px;
             text-decoration: none;
-            color: #667eea;
+            color: #0066cc;
         }
 
         .pagination a:hover {
-            background-color: #667eea;
+            background-color: #0066cc;
             color: white;
-        }
-
-        .pagination .current {
-            background-color: #667eea;
-            color: white;
-            border-color: #667eea;
         }
     </style>
     <script>
@@ -262,50 +215,50 @@
 <body>
     <div class="container">
         <header>
-            <h1>📋 Annonces</h1>
+            <h1>Annonces</h1>
             <div class="user-nav">
                 <c:if test="${sessionScope.userId != null}">
                     <span>Bienvenue, ${sessionScope.username}!</span>
-                    <a href="AnnonceAdd">➕ Créer une annonce</a>
-                    <a href="logout">🚪 Déconnexion</a>
+                    <a href="AnnonceAdd">Créer une annonce</a>
+                    <a href="logout">Déconnexion</a>
                 </c:if>
                 <c:if test="${sessionScope.userId == null}">
                     <a href="login">Connexion</a>
                     <a href="register">Inscription</a>
                 </c:if>
-                <a href="index.jsp">🏠 Accueil</a>
+                <a href="index.jsp">Accueil</a>
             </div>
         </header>
 
         <div class="controls">
             <h2>Annonces publiées</h2>
             <c:if test="${sessionScope.userId != null}">
-                <a href="AnnonceAdd">➕ Nouvelle annonce</a>
+                <a href="AnnonceAdd">Nouvelle annonce</a>
             </c:if>
         </div>
 
         <c:if test="${param.success eq 'deleted'}">
-            <div class="success">✓ Annonce supprimée avec succès</div>
+            <div class="success">Annonce supprimée avec succès</div>
         </c:if>
 
         <c:if test="${param.success eq 'updated'}">
-            <div class="success">✓ Annonce mise à jour avec succès</div>
+            <div class="success">Annonce mise à jour avec succès</div>
         </c:if>
 
         <c:if test="${param.published eq 'true'}">
-            <div class="success">✓ Annonce publiée avec succès</div>
+            <div class="success">Annonce publiée avec succès</div>
         </c:if>
 
         <c:if test="${param.archived eq 'true'}">
-            <div class="success">✓ Annonce archivée avec succès</div>
+            <div class="success">Annonce archivée avec succès</div>
         </c:if>
 
         <c:if test="${param.error eq 'delete'}">
-            <div class="error">✗ Erreur lors de la suppression</div>
+            <div class="error">Erreur lors de la suppression</div>
         </c:if>
 
         <c:if test="${not empty error}">
-            <div class="error">✗ ${error}</div>
+            <div class="error">${error}</div>
         </c:if>
 
         <c:choose>
@@ -328,26 +281,26 @@
                             <c:out value="${annonce.description}" />
                         </div>
                         <div class="annonce-meta">
-                            <div class="meta-item">📍 <c:out value="${annonce.adress}" /></div>
-                            <div class="meta-item">📧 <c:out value="${annonce.mail}" /></div>
-                            <div class="meta-item">📅 <fmt:formatDate value="${annonce.date}" pattern="dd/MM/yyyy HH:mm" /></div>
-                            <div class="meta-item">📂 <span class="badge"><c:out value="${annonce.category.label}" /></span></div>
-                            <div class="meta-item">👤 <c:out value="${annonce.author.username}" /></div>
+                            <div class="meta-item"><c:out value="${annonce.adress}" /></div>
+                            <div class="meta-item"><c:out value="${annonce.mail}" /></div>
+                            <div class="meta-item"><fmt:formatDate value="${annonce.date}" pattern="dd/MM/yyyy HH:mm" /></div>
+                            <div class="meta-item"><span class="badge"><c:out value="${annonce.category.label}" /></span></div>
+                            <div class="meta-item"><c:out value="${annonce.author.username}" /></div>
                         </div>
                         <div class="annonce-footer">
                             <div>
-                                <span class="badge" style="background-color: #28a745;">✓ Publié</span>
+                                <span class="badge" style="background-color: #28a745;">Publié</span>
                             </div>
                             <div class="annonce-actions">
                                 <c:if test="${sessionScope.userId == annonce.author.id}">
-                                    <a href="AnnonceUpdate?id=${annonce.id}" class="btn btn-primary">✏️ Modifier</a>
+                                    <a href="AnnonceUpdate?id=${annonce.id}" class="btn btn-primary">Modifier</a>
                                     <c:if test="${annonce.status == 'PUBLISHED'}">
-                                        <a href="AnnonceArchive?id=${annonce.id}" class="btn btn-warning">📦 Archiver</a>
+                                        <a href="AnnonceArchive?id=${annonce.id}" class="btn btn-warning">Archiver</a>
                                     </c:if>
-                                    <a href="javascript:void(0)" onclick="confirmDelete(${annonce.id}, '${fn:escapeXml(annonce.title)}')" class="btn btn-danger">🗑️ Supprimer</a>
+                                    <a href="javascript:void(0)" onclick="confirmDelete(${annonce.id}, '${fn:escapeXml(annonce.title)}')" class="btn btn-danger">Supprimer</a>
                                 </c:if>
                                 <c:if test="${sessionScope.userId != annonce.author.id && sessionScope.userId != null}">
-                                    <a href="mailto:${annonce.mail}" class="btn btn-primary">✉️ Contacter</a>
+                                    <a href="mailto:${annonce.mail}" class="btn btn-primary">Contacter</a>
                                 </c:if>
                             </div>
                         </div>

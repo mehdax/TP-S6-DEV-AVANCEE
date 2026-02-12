@@ -31,7 +31,7 @@ public class AnnonceService {
             Category category = categoryDAO.findById(categoryId)
                     .orElseThrow(() -> new IllegalArgumentException("Catégorie introuvable"));
 
-            // Créer l'annonce
+            // Créer l'annonce - directement publiée
             Annonce annonce = new Annonce();
             annonce.setTitle(title);
             annonce.setDescription(description);
@@ -39,6 +39,7 @@ public class AnnonceService {
             annonce.setMail(mail);
             annonce.setAuthor(author);
             annonce.setCategory(category);
+            annonce.setStatus(AnnonceStatus.PUBLISHED);  // Publié directement
 
             annonceDAO.save(annonce);
 

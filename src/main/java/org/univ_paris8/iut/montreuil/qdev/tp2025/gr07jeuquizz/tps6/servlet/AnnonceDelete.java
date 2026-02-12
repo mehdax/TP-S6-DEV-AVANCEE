@@ -1,6 +1,7 @@
 package org.univ_paris8.iut.montreuil.qdev.tp2025.gr07jeuquizz.tps6.servlet;
 
 import org.univ_paris8.iut.montreuil.qdev.tp2025.gr07jeuquizz.tps6.service.AnnonceService;
+import org.univ_paris8.iut.montreuil.qdev.tp2025.gr07jeuquizz.tps6.model.Annonce;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.Optional;
 
 @WebServlet("/AnnonceDelete")
 public class AnnonceDelete extends HttpServlet {
@@ -35,9 +37,18 @@ public class AnnonceDelete extends HttpServlet {
 
             try {
                 Long id = Long.parseLong(idParam);
+                Long userId = (Long) session.getAttribute("userId");
+
+                // Récupérer l'annonce et vérifier que c'est l'auteur
+                AnnonceService annonceService = new AnnonceService();
+                Optional<Annonce> annonceOpt = annonceService.getAnnonceById(id);
+
+                if (!annonceOpt.isPresent() || !annonceOpt.get().getAuthor().getId().equals(userId)) {
+                    response.sendRedirect("AnnonceList");
+                    return;
+                }
 
                 // Supprimer l'annonce via le service
-                AnnonceService annonceService = new AnnonceService();
                 annonceService.deleteAnnonce(id);
 
                 // Rediriger vers la liste avec un message de succès
