@@ -3,19 +3,19 @@
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
              xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd"
              version="3.0">
-    <persistence-unit name="default">
+    <persistence-unit name="MasterAnnonce">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
         <properties>
-            <!-- Configuration BDD PostgreSQL LOCAL -->
+            <!-- Configuration BDD PostgreSQL IUT Paris 8 -->
             <property name="javax.persistence.jdbc.url"
-                      value="jdbc:postgresql://localhost:5432/masterannonce"/>
+                      value="jdbc:postgresql://database-etudiants.iut.univ-paris8.fr/mbenali"/>
             <property name="javax.persistence.jdbc.driver"
                       value="org.postgresql.Driver"/>
             <property name="javax.persistence.jdbc.user"
-                      value="postgres"/>
+                      value="mbenali"/>
             <property name="javax.persistence.jdbc.password"
-                      value="123"/>
+                      value="Mehdy123"/>
 
             <!-- Dialecte PostgreSQL -->
             <property name="hibernate.dialect"

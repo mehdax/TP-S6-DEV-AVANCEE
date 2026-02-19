@@ -14,7 +14,7 @@ public class AnnonceService {
      * Créer une annonce
      */
     public Annonce createAnnonce(String title, String description, String adress,
-                                 String mail, Long authorId, Long categoryId) {
+            String mail, Long authorId, Long categoryId) {
         EntityManager em = JPAUtil.getEntityManager();
 
         try {
@@ -39,7 +39,7 @@ public class AnnonceService {
             annonce.setMail(mail);
             annonce.setAuthor(author);
             annonce.setCategory(category);
-            annonce.setStatus(AnnonceStatus.PUBLISHED);  // Publié directement
+            annonce.setStatus(AnnonceStatus.PUBLISHED); // Publié directement
 
             annonceDAO.save(annonce);
 
@@ -125,7 +125,7 @@ public class AnnonceService {
      * Modifier une annonce
      */
     public void updateAnnonce(Long annonceId, String title, String description,
-                              String adress, String mail, Long categoryId) {
+            String adress, String mail, Long categoryId) {
         EntityManager em = JPAUtil.getEntityManager();
 
         try {
@@ -186,6 +186,34 @@ public class AnnonceService {
     }
 
     /**
+     * Récupérer toutes les annonces avec pagination
+     */
+    public List<Annonce> getAllPaginated(int page, int pageSize) {
+        EntityManager em = JPAUtil.getEntityManager();
+
+        try {
+            AnnonceDAO annonceDAO = new AnnonceDAO(em);
+            return annonceDAO.findAllPaginated(page, pageSize);
+        } finally {
+            em.close();
+        }
+    }
+
+    /**
+     * Compter le nombre total d'annonces
+     */
+    public long countAll() {
+        EntityManager em = JPAUtil.getEntityManager();
+
+        try {
+            AnnonceDAO annonceDAO = new AnnonceDAO(em);
+            return annonceDAO.count();
+        } finally {
+            em.close();
+        }
+    }
+
+    /**
      * Récupérer les annonces publiées (pagination)
      */
     public List<Annonce> getPublishedAnnonces(int page, int pageSize) {
@@ -239,6 +267,20 @@ public class AnnonceService {
             UserDAO userDAO = new UserDAO(em);
             User user = userDAO.findById(userId).get();
             return annonceDAO.findByAuthor(user);
+        } finally {
+            em.close();
+        }
+    }
+
+    /**
+     * Récupérer les annonces d'un utilisateur par statut
+     */
+    public List<Annonce> getUserAnnoncesByStatus(Long userId, AnnonceStatus status) {
+        EntityManager em = JPAUtil.getEntityManager();
+
+        try {
+            AnnonceDAO annonceDAO = new AnnonceDAO(em);
+            return annonceDAO.findByAuthorIdAndStatus(userId, status);
         } finally {
             em.close();
         }

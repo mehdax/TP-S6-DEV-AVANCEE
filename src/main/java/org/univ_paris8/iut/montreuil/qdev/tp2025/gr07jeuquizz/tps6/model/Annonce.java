@@ -8,7 +8,7 @@ import javax.validation.constraints.*;
 import java.util.Date;
 
 @Entity
-@Table(name="Annonce")
+@Table(name = "Annonce")
 public class Annonce {
 
     @Id
@@ -54,9 +54,17 @@ public class Annonce {
     @JoinColumn(name = "category_id", nullable = false)
     private Category category;
 
+    /**
+     * Exercice 7 : Gestion de la concurrence via @Version
+     * Hibernate vérifie automatiquement ce champ à chaque UPDATE.
+     * Si deux utilisateurs modifient la même annonce en même temps,
+     * le second reçoit une OptimisticLockException.
+     */
+    @Version
+    private Long version;
+
     public Annonce(int id, String title, String description, String adress, String mail, Timestamp date) {
     }
-
 
     @PrePersist
     protected void onCreate() {
@@ -68,7 +76,6 @@ public class Annonce {
         }
     }
 
-
     public void publish() {
         if (this.status == AnnonceStatus.DRAFT) {
             this.status = AnnonceStatus.PUBLISHED;
@@ -77,7 +84,6 @@ public class Annonce {
         }
     }
 
-
     public void archive() {
         if (this.status == AnnonceStatus.PUBLISHED) {
             this.status = AnnonceStatus.ARCHIVED;
@@ -85,7 +91,6 @@ public class Annonce {
             throw new IllegalStateException("Seules les annonces publiées peuvent être archivées");
         }
     }
-
 
     public boolean isPublished() {
         return this.status == AnnonceStatus.PUBLISHED;
@@ -163,7 +168,6 @@ public class Annonce {
                 '}';
     }
 
-
     public void setStatus(AnnonceStatus status) {
         this.status = status;
     }
@@ -188,8 +192,4 @@ public class Annonce {
         return category;
     }
 
-
-
-
 }
-

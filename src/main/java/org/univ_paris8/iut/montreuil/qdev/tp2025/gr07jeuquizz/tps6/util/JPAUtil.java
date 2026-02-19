@@ -4,10 +4,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-
 public class JPAUtil {
 
-    private static final String PERSISTENCE_UNIT_NAME = "default";
+    private static final String PERSISTENCE_UNIT_NAME = "MasterAnnonce";
     private static EntityManagerFactory entityManagerFactory;
 
     // Bloc statique pour initialiser l'EMF au chargement de la classe
@@ -22,11 +21,9 @@ public class JPAUtil {
         }
     }
 
-
     public static EntityManagerFactory getEntityManagerFactory() {
         return entityManagerFactory;
     }
-
 
     public static EntityManager getEntityManager() {
         if (entityManagerFactory == null) {
@@ -35,14 +32,12 @@ public class JPAUtil {
         return entityManagerFactory.createEntityManager();
     }
 
-
     public static void shutdown() {
         if (entityManagerFactory != null && entityManagerFactory.isOpen()) {
             entityManagerFactory.close();
             System.out.println("✅ EntityManagerFactory fermée");
         }
     }
-
 
     public static void executeInTransaction(TransactionCallback callback) {
         EntityManager em = getEntityManager();
@@ -59,7 +54,6 @@ public class JPAUtil {
             em.close();
         }
     }
-
 
     @FunctionalInterface
     public interface TransactionCallback {
