@@ -20,37 +20,37 @@ import java.io.IOException;
 public class AnnoncePublish extends HttpServlet {
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) 
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         HttpSession session = request.getSession(false);
-        
+
         // Vérifier que l'utilisateur est authentifié
         if (session == null || session.getAttribute("userId") == null) {
             response.sendRedirect(request.getContextPath() + "/login.jsp");
             return;
         }
-        
+
         try {
             Long userId = (Long) session.getAttribute("userId");
             Long annonceId = Long.parseLong(request.getParameter("id"));
-            
+
             AnnonceService annonceService = new AnnonceService();
-            
+
             // Récupérer l'annonce et vérifier que c'est l'auteur
             var annonce = annonceService.getAnnonceById(annonceId)
-                .orElseThrow(() -> new IllegalArgumentException("Annonce non trouvée"));
-            
+                    .orElseThrow(() -> new IllegalArgumentException("Annonce non trouvée"));
+
             if (!annonce.getAuthor().getId().equals(userId)) {
                 request.setAttribute("error", "Vous ne pouvez pas publier cette annonce");
                 request.getRequestDispatcher("/AnnonceList").forward(request, response);
                 return;
             }
-            
+
             // Publier l'annonce
-            annonceService.publishAnnonce(annonceId);
+            annonceService.publishAnnonce(annonceId, userId);
             response.sendRedirect(request.getContextPath() + "/AnnonceList?published=true");
-            
+
         } catch (NumberFormatException e) {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "ID invalide");
         } catch (IllegalArgumentException e) {

@@ -8,7 +8,7 @@ import javax.validation.constraints.*;
 import java.util.Date;
 
 @Entity
-@Table(name="Annonce")
+@Table(name = "Annonce")
 public class Annonce {
 
     @Id
@@ -44,6 +44,11 @@ public class Annonce {
     @Column(nullable = false, length = 20)
     private AnnonceStatus status = AnnonceStatus.DRAFT;
 
+    /** Gestion de la concurrence optimiste (Exercice 7) */
+    @Version
+    @Column(name = "version")
+    private Long version;
+
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "author_id", nullable = false)
@@ -57,7 +62,6 @@ public class Annonce {
     public Annonce(int id, String title, String description, String adress, String mail, Timestamp date) {
     }
 
-
     @PrePersist
     protected void onCreate() {
         if (this.date == null) {
@@ -68,7 +72,6 @@ public class Annonce {
         }
     }
 
-
     public void publish() {
         if (this.status == AnnonceStatus.DRAFT) {
             this.status = AnnonceStatus.PUBLISHED;
@@ -77,7 +80,6 @@ public class Annonce {
         }
     }
 
-
     public void archive() {
         if (this.status == AnnonceStatus.PUBLISHED) {
             this.status = AnnonceStatus.ARCHIVED;
@@ -85,7 +87,6 @@ public class Annonce {
             throw new IllegalStateException("Seules les annonces publiées peuvent être archivées");
         }
     }
-
 
     public boolean isPublished() {
         return this.status == AnnonceStatus.PUBLISHED;
@@ -103,12 +104,12 @@ public class Annonce {
     }
 
     // Getters et Setters
-    public int getId() {
-        return id.intValue();
+    public Long getId() {
+        return id;
     }
 
-    public void setId(int id) {
-        this.id = (long) id;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getTitle() {
@@ -163,7 +164,6 @@ public class Annonce {
                 '}';
     }
 
-
     public void setStatus(AnnonceStatus status) {
         this.status = status;
     }
@@ -188,8 +188,12 @@ public class Annonce {
         return category;
     }
 
+    public Long getVersion() {
+        return version;
+    }
 
-
+    public void setVersion(Long version) {
+        this.version = version;
+    }
 
 }
-

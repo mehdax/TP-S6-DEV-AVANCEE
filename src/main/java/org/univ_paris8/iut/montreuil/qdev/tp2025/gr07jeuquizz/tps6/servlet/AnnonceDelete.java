@@ -49,7 +49,7 @@ public class AnnonceDelete extends HttpServlet {
                 }
 
                 // Supprimer l'annonce via le service
-                annonceService.deleteAnnonce(id);
+                annonceService.deleteAnnonce(id, userId);
 
                 // Rediriger vers la liste avec un message de succès
                 response.sendRedirect("AnnonceList?success=deleted");

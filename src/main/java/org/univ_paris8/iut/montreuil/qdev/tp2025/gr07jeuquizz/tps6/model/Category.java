@@ -6,8 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "category",
-        uniqueConstraints = @UniqueConstraint(columnNames = "label"))
+@Table(name = "category", uniqueConstraints = @UniqueConstraint(columnNames = "label"))
 public class Category {
 
     @Id
@@ -22,14 +21,12 @@ public class Category {
     @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
     private List<Annonce> annonces = new ArrayList<>();
 
-
     public Category() {
     }
 
     public Category(String label) {
         this.label = label;
     }
-
 
     public void setLabel(String label) {
         this.label = label;
@@ -45,6 +42,10 @@ public class Category {
 
     public void setId(String id) {
         this.id = Long.valueOf(id);
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public List<Annonce> getAnnonces() {

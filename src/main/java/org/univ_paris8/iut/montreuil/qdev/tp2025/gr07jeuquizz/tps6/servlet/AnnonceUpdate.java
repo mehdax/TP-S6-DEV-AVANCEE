@@ -128,7 +128,7 @@ public class AnnonceUpdate extends HttpServlet {
                 }
 
                 // Mettre à jour via le service
-                annonceService.updateAnnonce(id, title, description, adress, mail, categoryId);
+                annonceService.updateAnnonce(id, title, description, adress, mail, categoryId, userId);
 
                 // Rediriger vers la liste
                 response.sendRedirect("AnnonceList?success=updated");

@@ -1,0 +1,10 @@
+2026-02-19 04:08:32.120 [main] WARN  o.h.j.b.i.PersistenceXmlParser - HHH015018: Encountered multiple persistence-unit stanzas defining same name [default]; persistence-unit names must be unique
+2026-02-19 04:08:32.695 [main] WARN  o.hibernate.orm.connections.pooling - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+2026-02-19 04:36:22.087 [main] WARN  o.h.j.b.i.PersistenceXmlParser - HHH015018: Encountered multiple persistence-unit stanzas defining same name [default]; persistence-unit names must be unique
+2026-02-19 04:36:22.759 [main] WARN  o.hibernate.orm.connections.pooling - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+2026-02-19 04:45:15.418 [main] DEBUG o.u.i.m.q.t.g.t.security.TokenStore - Token stocké pour userId=1, expiration=2026-02-20T03:45:15.417026900Z
+2026-02-19 04:45:15.426 [main] DEBUG o.u.i.m.q.t.g.t.security.TokenStore - Token révoqué
+2026-02-19 04:46:01.597 [main] DEBUG o.u.i.m.q.t.g.t.security.TokenStore - Token stocké pour userId=1, expiration=2026-02-20T03:46:01.595683Z
+2026-02-19 04:46:01.603 [main] DEBUG o.u.i.m.q.t.g.t.security.TokenStore - Token révoqué
+2026-02-19 04:56:45.867 [main] WARN  o.h.j.b.i.PersistenceXmlParser - HHH015018: Encountered multiple persistence-unit stanzas defining same name [default]; persistence-unit names must be unique
+2026-02-19 04:56:46.345 [main] WARN  o.hibernate.orm.connections.pooling - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
