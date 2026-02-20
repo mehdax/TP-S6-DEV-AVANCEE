@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Exercice 10 – Logging structuré avec Logback + SLF4J
+
+    Configuration de Logback pour un logging structuré :
+    - Console : format lisible avec timestamp, niveau, logger et message
+    - Les requêtes SQL Hibernate sont loggées en DEBUG si besoin
+    - Production : on n'affiche que les niveaux WARN et ERROR de Hibernate
+-->
+<configuration>
+
+    <!-- Appender Console avec pattern structuré -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Appender fichier pour production (optionnel) -->
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>logs/masterannonce.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>logs/masterannonce.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Logger pour le projet MasterAnnonce -->
+    <logger name="org.univ_paris8.iut.montreuil.qdev.tp2025.gr07jeuquizz" level="DEBUG"/>
+
+    <!-- Logger Hibernate : SQL en WARN par défaut (mettre DEBUG pour voir les requêtes) -->
+    <logger name="org.hibernate.SQL" level="WARN"/>
+    <logger name="org.hibernate.type.descriptor.sql" level="WARN"/>
+
+    <!-- Logger Jersey -->
+    <logger name="org.glassfish.jersey" level="WARN"/>
+
+    <!-- Root logger -->
+    <root level="INFO">
+        <appender-ref ref="CONSOLE"/>
+    </root>
+
+</configuration>

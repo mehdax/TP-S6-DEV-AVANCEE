@@ -3,21 +3,6 @@ package org.univ_paris8.iut.montreuil.qdev.tp2025.gr07jeuquizz.tps6.rest.dto;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-/**
- * Réponse d'erreur JSON normalisée pour l'API REST.
- *
- * Format de réponse standard :
- * {
- * "status": 400,
- * "error": "Bad Request",
- * "message": "Description de l'erreur",
- * "details": ["champ1 : erreur de validation", ...]
- * }
- *
- * Ce format permet au client de toujours avoir la même structure
- * de réponse d'erreur, quel que soit le type d'erreur.
- */
 public class ApiError {
 
     private int status;
@@ -42,9 +27,6 @@ public class ApiError {
         this(status, error, message);
         this.details = details;
     }
-
-    // Getters & Setters
-
     public int getStatus() {
         return status;
     }
@@ -85,3 +67,4 @@ public class ApiError {
         this.timestamp = timestamp;
     }
 }
+

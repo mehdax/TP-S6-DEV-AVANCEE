@@ -24,7 +24,7 @@ public class User {
     private String username;
 
     @NotBlank
-    @Email(message = "L'email doit être valide")
+    @Email(message = "L'email doit Ãªtre valide")
     @Column(nullable = false, unique = true, length = 100)
     private String email;
 

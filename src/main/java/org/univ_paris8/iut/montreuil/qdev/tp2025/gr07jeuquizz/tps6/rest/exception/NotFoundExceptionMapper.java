@@ -7,13 +7,6 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
-
-/**
- * Intercepte les NotFoundException (ressource introuvable)
- * et retourne une réponse 404 normalisée.
- *
- * → 404 Not Found : ressource inexistante
- */
 @Provider
 public class NotFoundExceptionMapper implements ExceptionMapper<NotFoundException> {
 
@@ -30,3 +23,4 @@ public class NotFoundExceptionMapper implements ExceptionMapper<NotFoundExceptio
                 .build();
     }
 }
+

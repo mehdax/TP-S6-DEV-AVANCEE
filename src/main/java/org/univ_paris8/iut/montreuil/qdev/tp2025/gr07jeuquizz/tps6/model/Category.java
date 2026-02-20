@@ -21,16 +21,12 @@ public class Category {
 
     @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
     private List<Annonce> annonces = new ArrayList<>();
-
-
     public Category() {
     }
 
     public Category(String label) {
         this.label = label;
     }
-
-
     public void setLabel(String label) {
         this.label = label;
     }

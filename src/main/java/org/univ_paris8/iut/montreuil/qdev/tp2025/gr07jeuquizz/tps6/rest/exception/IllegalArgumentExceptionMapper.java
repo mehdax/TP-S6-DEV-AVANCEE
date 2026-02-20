@@ -6,14 +6,6 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
-
-/**
- * Intercepte les IllegalArgumentException (ex: entité introuvable)
- * et retourne une réponse 400 normalisée.
- *
- * → 400 Bad Request : requête invalide (paramètres erronés, ID inexistant,
- * etc.)
- */
 @Provider
 public class IllegalArgumentExceptionMapper implements ExceptionMapper<IllegalArgumentException> {
 
@@ -30,3 +22,4 @@ public class IllegalArgumentExceptionMapper implements ExceptionMapper<IllegalAr
                 .build();
     }
 }
+

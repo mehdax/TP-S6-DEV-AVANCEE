@@ -6,15 +6,6 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
-
-/**
- * Intercepte les IllegalStateException (conflits métier)
- * et retourne une réponse 409 normalisée.
- *
- * → 409 Conflict : conflit métier
- * Ex : publier une annonce qui n'est pas en DRAFT,
- * archiver une annonce qui n'est pas PUBLISHED, etc.
- */
 @Provider
 public class IllegalStateExceptionMapper implements ExceptionMapper<IllegalStateException> {
 
@@ -31,3 +22,4 @@ public class IllegalStateExceptionMapper implements ExceptionMapper<IllegalState
                 .build();
     }
 }
+

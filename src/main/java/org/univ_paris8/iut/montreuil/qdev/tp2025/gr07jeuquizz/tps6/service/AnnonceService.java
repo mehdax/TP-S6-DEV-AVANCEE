@@ -9,10 +9,6 @@ import java.util.List;
 import java.util.Optional;
 
 public class AnnonceService {
-
-    /**
-     * Créer une annonce
-     */
     public Annonce createAnnonce(String title, String description, String adress,
             String mail, Long authorId, Long categoryId) {
         EntityManager em = JPAUtil.getEntityManager();
@@ -24,14 +20,14 @@ public class AnnonceService {
             UserDAO userDAO = new UserDAO(em);
             CategoryDAO categoryDAO = new CategoryDAO(em);
 
-            // Récupérer l'auteur et la catégorie
+            
             User author = userDAO.findById(authorId)
                     .orElseThrow(() -> new IllegalArgumentException("Utilisateur introuvable"));
 
             Category category = categoryDAO.findById(categoryId)
                     .orElseThrow(() -> new IllegalArgumentException("Catégorie introuvable"));
 
-            // Créer l'annonce - directement publiée
+            
             Annonce annonce = new Annonce();
             annonce.setTitle(title);
             annonce.setDescription(description);
@@ -39,7 +35,7 @@ public class AnnonceService {
             annonce.setMail(mail);
             annonce.setAuthor(author);
             annonce.setCategory(category);
-            annonce.setStatus(AnnonceStatus.PUBLISHED); // Publié directement
+            annonce.setStatus(AnnonceStatus.PUBLISHED); 
 
             annonceDAO.save(annonce);
 
@@ -55,10 +51,6 @@ public class AnnonceService {
             em.close();
         }
     }
-
-    /**
-     * Publier une annonce
-     */
     public void publishAnnonce(Long annonceId) {
         EntityManager em = JPAUtil.getEntityManager();
 
@@ -69,7 +61,7 @@ public class AnnonceService {
             Annonce annonce = annonceDAO.findById(annonceId)
                     .orElseThrow(() -> new IllegalArgumentException("Annonce introuvable"));
 
-            // Logique métier
+            
             if (annonce.getStatus() != AnnonceStatus.DRAFT) {
                 throw new IllegalStateException("Seules les annonces en brouillon peuvent être publiées");
             }
@@ -88,10 +80,6 @@ public class AnnonceService {
             em.close();
         }
     }
-
-    /**
-     * Archiver une annonce
-     */
     public void archiveAnnonce(Long annonceId) {
         EntityManager em = JPAUtil.getEntityManager();
 
@@ -120,10 +108,6 @@ public class AnnonceService {
             em.close();
         }
     }
-
-    /**
-     * Modifier une annonce
-     */
     public void updateAnnonce(Long annonceId, String title, String description,
             String adress, String mail, Long categoryId) {
         EntityManager em = JPAUtil.getEntityManager();
@@ -140,7 +124,7 @@ public class AnnonceService {
             Category category = categoryDAO.findById(categoryId)
                     .orElseThrow(() -> new IllegalArgumentException("Catégorie introuvable"));
 
-            // Mise à jour
+            
             annonce.setTitle(title);
             annonce.setDescription(description);
             annonce.setAdress(adress);
@@ -160,10 +144,6 @@ public class AnnonceService {
             em.close();
         }
     }
-
-    /**
-     * Supprimer une annonce
-     */
     public void deleteAnnonce(Long annonceId) {
         EntityManager em = JPAUtil.getEntityManager();
 
@@ -184,10 +164,6 @@ public class AnnonceService {
             em.close();
         }
     }
-
-    /**
-     * Récupérer toutes les annonces avec pagination
-     */
     public List<Annonce> getAllPaginated(int page, int pageSize) {
         EntityManager em = JPAUtil.getEntityManager();
 
@@ -198,10 +174,6 @@ public class AnnonceService {
             em.close();
         }
     }
-
-    /**
-     * Compter le nombre total d'annonces
-     */
     public long countAll() {
         EntityManager em = JPAUtil.getEntityManager();
 
@@ -212,10 +184,6 @@ public class AnnonceService {
             em.close();
         }
     }
-
-    /**
-     * Récupérer les annonces publiées (pagination)
-     */
     public List<Annonce> getPublishedAnnonces(int page, int pageSize) {
         EntityManager em = JPAUtil.getEntityManager();
 
@@ -226,10 +194,6 @@ public class AnnonceService {
             em.close();
         }
     }
-
-    /**
-     * Recherche par mot-clé
-     */
     public List<Annonce> searchAnnonces(String keyword) {
         EntityManager em = JPAUtil.getEntityManager();
 
@@ -240,10 +204,6 @@ public class AnnonceService {
             em.close();
         }
     }
-
-    /**
-     * Récupérer une annonce par ID
-     */
     public Optional<Annonce> getAnnonceById(Long id) {
         EntityManager em = JPAUtil.getEntityManager();
 
@@ -255,10 +215,6 @@ public class AnnonceService {
             em.close();
         }
     }
-
-    /**
-     * Récupérer les annonces d'un utilisateur
-     */
     public List<Annonce> getUserAnnonces(Long userId) {
         EntityManager em = JPAUtil.getEntityManager();
 
@@ -271,10 +227,6 @@ public class AnnonceService {
             em.close();
         }
     }
-
-    /**
-     * Récupérer les annonces d'un utilisateur par statut
-     */
     public List<Annonce> getUserAnnoncesByStatus(Long userId, AnnonceStatus status) {
         EntityManager em = JPAUtil.getEntityManager();
 

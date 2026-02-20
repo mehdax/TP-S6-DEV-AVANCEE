@@ -2,23 +2,6 @@ package org.univ_paris8.iut.montreuil.qdev.tp2025.gr07jeuquizz.tps6.rest.dto;
 
 import javax.validation.constraints.*;
 import java.util.Date;
-
-/**
- * DTO pour l'entité Annonce.
- * Utilise le Pattern Builder pour faciliter le mapping Entity ↔ DTO.
- *
- * Le DTO sert à :
- * - Découpler la couche REST de la couche modèle (entité JPA)
- * - Contrôler les données exposées via l'API
- * - Éviter les problèmes de sérialisation liés aux relations lazy (User,
- * Category)
- *
- * Bean Validation (Exercice 3) :
- * Les annotations de validation sont appliquées sur les champs du DTO.
- * Combinées avec @Valid dans le Resource, Jersey valide automatiquement
- * les données entrantes et déclenche une ConstraintViolationException
- * interceptée par le ConstraintViolationExceptionMapper.
- */
 public class AnnonceDTO {
 
     private Long id;
@@ -52,11 +35,11 @@ public class AnnonceDTO {
 
     private String categoryLabel;
 
-    // Constructeur vide requis pour la désérialisation JSON (Jackson)
+    
     public AnnonceDTO() {
     }
 
-    // Constructeur privé utilisé par le Builder
+    
     private AnnonceDTO(Builder builder) {
         this.id = builder.id;
         this.title = builder.title;
@@ -70,9 +53,6 @@ public class AnnonceDTO {
         this.categoryId = builder.categoryId;
         this.categoryLabel = builder.categoryLabel;
     }
-
-    // ===== Pattern Builder =====
-
     public static class Builder {
         private Long id;
         private String title;
@@ -148,9 +128,6 @@ public class AnnonceDTO {
             return new AnnonceDTO(this);
         }
     }
-
-    // ===== Getters & Setters =====
-
     public Long getId() {
         return id;
     }
@@ -239,3 +216,4 @@ public class AnnonceDTO {
         this.categoryLabel = categoryLabel;
     }
 }
+

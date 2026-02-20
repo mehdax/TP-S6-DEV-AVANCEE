@@ -7,13 +7,6 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.HashMap;
 import java.util.Map;
-
-/**
- * Ressource REST simple pour tester la configuration JAX-RS.
- *
- * Endpoint : GET /api/helloWorld
- * Retourne un message JSON : {"message": "Hello World!"}
- */
 @Path("/helloWorld")
 public class HelloWorldResource {
 
@@ -25,3 +18,4 @@ public class HelloWorldResource {
         return Response.ok(response).build();
     }
 }
+

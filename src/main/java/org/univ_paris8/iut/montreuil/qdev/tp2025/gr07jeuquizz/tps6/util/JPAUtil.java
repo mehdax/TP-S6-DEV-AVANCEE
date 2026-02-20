@@ -9,7 +9,7 @@ public class JPAUtil {
     private static final String PERSISTENCE_UNIT_NAME = "MasterAnnonce";
     private static EntityManagerFactory entityManagerFactory;
 
-    // Bloc statique pour initialiser l'EMF au chargement de la classe
+    
     static {
         try {
             entityManagerFactory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
@@ -53,6 +53,12 @@ public class JPAUtil {
         } finally {
             em.close();
         }
+    }
+    public static void setEntityManagerFactory(EntityManagerFactory emf) {
+        if (entityManagerFactory != null && entityManagerFactory.isOpen()) {
+            entityManagerFactory.close();
+        }
+        entityManagerFactory = emf;
     }
 
     @FunctionalInterface

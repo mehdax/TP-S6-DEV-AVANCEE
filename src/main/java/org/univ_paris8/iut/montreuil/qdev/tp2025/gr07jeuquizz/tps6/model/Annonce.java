@@ -53,13 +53,6 @@ public class Annonce {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "category_id", nullable = false)
     private Category category;
-
-    /**
-     * Exercice 7 : Gestion de la concurrence via @Version
-     * Hibernate vérifie automatiquement ce champ à chaque UPDATE.
-     * Si deux utilisateurs modifient la même annonce en même temps,
-     * le second reçoit une OptimisticLockException.
-     */
     @Version
     private Long version;
 
@@ -107,7 +100,7 @@ public class Annonce {
 
     }
 
-    // Getters et Setters
+    
     public int getId() {
         return id.intValue();
     }
@@ -193,3 +186,4 @@ public class Annonce {
     }
 
 }
+

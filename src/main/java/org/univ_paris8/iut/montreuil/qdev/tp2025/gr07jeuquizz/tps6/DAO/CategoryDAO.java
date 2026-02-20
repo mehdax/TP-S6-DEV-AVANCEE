@@ -1,6 +1,4 @@
 package org.univ_paris8.iut.montreuil.qdev.tp2025.gr07jeuquizz.tps6.DAO;
-
-
 import org.univ_paris8.iut.montreuil.qdev.tp2025.gr07jeuquizz.tps6.model.Category;
 
 import javax.persistence.EntityManager;
@@ -12,10 +10,6 @@ public class CategoryDAO extends GenericDAO<Category> {
     public CategoryDAO(EntityManager em) {
         super(em, Category.class);
     }
-
-    /**
-     * Trouver une catégorie par son label
-     */
     public Optional<Category> findByLabel(String label) {
         try {
             Category category = em.createQuery(
@@ -28,10 +22,6 @@ public class CategoryDAO extends GenericDAO<Category> {
             return Optional.empty();
         }
     }
-
-    /**
-     * Vérifier si une catégorie existe
-     */
     public boolean existsByLabel(String label) {
         Long count = em.createQuery(
                         "SELECT COUNT(c) FROM Category c WHERE c.label = :label",

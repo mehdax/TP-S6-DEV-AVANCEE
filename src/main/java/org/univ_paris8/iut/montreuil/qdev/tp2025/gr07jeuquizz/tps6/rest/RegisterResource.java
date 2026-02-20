@@ -8,11 +8,6 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.HashMap;
 import java.util.Map;
-
-/**
- * Endpoint d'inscription REST.
- * POST /api/register → crée un utilisateur
- */
 @Path("/register")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
@@ -49,3 +44,4 @@ public class RegisterResource {
         }
     }
 }
+

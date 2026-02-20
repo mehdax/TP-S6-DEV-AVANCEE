@@ -1,16 +1,6 @@
 package org.univ_paris8.iut.montreuil.qdev.tp2025.gr07jeuquizz.tps6.rest.dto;
 
 import javax.validation.constraints.NotBlank;
-
-/**
- * DTO pour la requête de login.
- *
- * Entrée JSON attendue :
- * {
- * "username": "...",
- * "password": "..."
- * }
- */
 public class LoginDTO {
 
     @NotBlank(message = "Le nom d'utilisateur est obligatoire")
@@ -43,3 +33,4 @@ public class LoginDTO {
         this.password = password;
     }
 }
+

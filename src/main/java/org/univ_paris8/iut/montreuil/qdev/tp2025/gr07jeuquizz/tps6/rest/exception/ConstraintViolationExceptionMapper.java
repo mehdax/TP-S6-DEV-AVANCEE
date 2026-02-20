@@ -10,23 +10,6 @@ import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 import java.util.List;
 import java.util.stream.Collectors;
-
-/**
- * Intercepte les ConstraintViolationException (Bean Validation)
- * et retourne une réponse 400 normalisée avec le détail de chaque violation.
- *
- * Exemple de réponse :
- * {
- * "status": 400,
- * "error": "Erreur de validation",
- * "message": "Les données envoyées sont invalides",
- * "details": [
- * "title : ne doit pas être vide",
- * "mail : doit être un email valide"
- * ],
- * "timestamp": "2026-02-19T..."
- * }
- */
 @Provider
 public class ConstraintViolationExceptionMapper implements ExceptionMapper<ConstraintViolationException> {
 
@@ -50,7 +33,7 @@ public class ConstraintViolationExceptionMapper implements ExceptionMapper<Const
     }
 
     private String formatViolation(ConstraintViolation<?> violation) {
-        // Extraire le nom du champ depuis le chemin de la propriété
+        
         String field = "";
         for (javax.validation.Path.Node node : violation.getPropertyPath()) {
             field = node.getName();
@@ -58,3 +41,4 @@ public class ConstraintViolationExceptionMapper implements ExceptionMapper<Const
         return field + " : " + violation.getMessage();
     }
 }
+

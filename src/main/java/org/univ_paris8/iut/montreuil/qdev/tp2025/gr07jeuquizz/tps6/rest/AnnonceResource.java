@@ -18,20 +18,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-
-/**
- * Ressource REST pour la gestion des annonces.
- *
- * Sécurité (Exercice 6) :
- * - Les endpoints de modification (POST, PUT, DELETE, PATCH, publish)
- * sont protégés par @Secured → nécessitent un token Bearer.
- * - Les endpoints de lecture (GET liste, GET détail) restent publics.
- *
- * Règles métier (Exercice 7) :
- * - Seul l'auteur peut modifier/supprimer son annonce (403)
- * - Une annonce PUBLISHED ne peut plus être modifiée (409)
- * - Archivage obligatoire avant suppression (409)
- */
 @Path("/annonces")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
@@ -41,16 +27,6 @@ public class AnnonceResource {
 
     @Context
     private ContainerRequestContext requestContext;
-
-    // ========== GET /api/annonces – Liste paginée ==========
-
-    /**
-     * Récupère la liste paginée des annonces.
-     *
-     * @param page     numéro de page (défaut 0)
-     * @param pageSize taille de page (défaut 10)
-     * @return 200 OK avec la liste paginée + métadonnées de pagination
-     */
     @GET
     public Response getAllAnnonces(
             @QueryParam("page") @DefaultValue("0") int page,
@@ -60,7 +36,7 @@ public class AnnonceResource {
         List<AnnonceDTO> dtos = AnnonceMapper.toDTOList(annonces);
         long total = annonceService.countAll();
 
-        // Réponse avec métadonnées de pagination
+        
         Map<String, Object> response = new HashMap<>();
         response.put("content", dtos);
         response.put("page", page);
@@ -70,15 +46,6 @@ public class AnnonceResource {
 
         return Response.ok(response).build();
     }
-
-    // ========== GET /api/annonces/{id} – Détail ==========
-
-    /**
-     * Récupère le détail d'une annonce par son ID.
-     *
-     * @param id identifiant de l'annonce
-     * @return 200 OK avec le DTO, ou 404 Not Found
-     */
     @GET
     @Path("/{id}")
     public Response getAnnonceById(@PathParam("id") Long id) {
@@ -93,21 +60,9 @@ public class AnnonceResource {
         AnnonceDTO dto = AnnonceMapper.toDTO(annonceOpt.get());
         return Response.ok(dto).build();
     }
-
-    // ========== POST /api/annonces – Création ==========
-
-    /**
-     * Crée une nouvelle annonce.
-     *
-     * @param dto les données de l'annonce à créer
-     * @return 201 Created avec le DTO créé + header Location, ou 400 Bad Request
-     */
     @POST
     @Secured
     public Response createAnnonce(@Valid AnnonceDTO dto) {
-        // La validation est automatiquement gérée par Bean Validation (@Valid)
-        // En cas d'erreur, ConstraintViolationExceptionMapper retourne une 400
-
         try {
             Annonce created = annonceService.createAnnonce(
                     dto.getTitle(),
@@ -133,21 +88,11 @@ public class AnnonceResource {
                     .build();
         }
     }
-
-    // ========== PUT /api/annonces/{id} – Mise à jour complète ==========
-
-    /**
-     * Met à jour complètement une annonce existante.
-     *
-     * @param id  identifiant de l'annonce
-     * @param dto les nouvelles données
-     * @return 200 OK avec le DTO mis à jour, 404 Not Found, ou 400 Bad Request
-     */
     @PUT
     @Path("/{id}")
     @Secured
     public Response updateAnnonce(@PathParam("id") Long id, @Valid AnnonceDTO dto) {
-        // Vérifier que l'annonce existe
+        
         Optional<Annonce> existing = annonceService.getAnnonceById(id);
         if (!existing.isPresent()) {
             return Response.status(Response.Status.NOT_FOUND)
@@ -157,7 +102,7 @@ public class AnnonceResource {
 
         Annonce annonce = existing.get();
 
-        // Exercice 7 : Seul l'auteur peut modifier son annonce
+        
         Long currentUserId = (Long) requestContext.getProperty("userId");
         if (annonce.getAuthor() != null && !annonce.getAuthor().getId().equals(currentUserId)) {
             return Response.status(Response.Status.FORBIDDEN)
@@ -165,7 +110,7 @@ public class AnnonceResource {
                     .build();
         }
 
-        // Exercice 7 : Une annonce PUBLISHED ne peut plus être modifiée
+        
         if (annonce.getStatus() == AnnonceStatus.PUBLISHED) {
             return Response.status(Response.Status.CONFLICT)
                     .entity(errorResponse("Une annonce publiée ne peut plus être modifiée"))
@@ -181,7 +126,7 @@ public class AnnonceResource {
                     dto.getMail(),
                     dto.getCategoryId());
 
-            // Récupérer l'annonce mise à jour pour la réponse
+            
             Annonce updated = annonceService.getAnnonceById(id).get();
             AnnonceDTO updatedDTO = AnnonceMapper.toDTO(updated);
             return Response.ok(updatedDTO).build();
@@ -196,20 +141,11 @@ public class AnnonceResource {
                     .build();
         }
     }
-
-    // ========== DELETE /api/annonces/{id} – Suppression ==========
-
-    /**
-     * Supprime une annonce par son ID.
-     *
-     * @param id identifiant de l'annonce
-     * @return 204 No Content si succès, ou 404 Not Found
-     */
     @DELETE
     @Path("/{id}")
     @Secured
     public Response deleteAnnonce(@PathParam("id") Long id) {
-        // Vérifier que l'annonce existe
+        
         Optional<Annonce> existing = annonceService.getAnnonceById(id);
         if (!existing.isPresent()) {
             return Response.status(Response.Status.NOT_FOUND)
@@ -219,7 +155,7 @@ public class AnnonceResource {
 
         Annonce annonce = existing.get();
 
-        // Exercice 7 : Seul l'auteur peut supprimer son annonce
+        
         Long currentUserId = (Long) requestContext.getProperty("userId");
         if (annonce.getAuthor() != null && !annonce.getAuthor().getId().equals(currentUserId)) {
             return Response.status(Response.Status.FORBIDDEN)
@@ -227,7 +163,7 @@ public class AnnonceResource {
                     .build();
         }
 
-        // Exercice 7 : Archivage obligatoire avant suppression
+        
         if (annonce.getStatus() != AnnonceStatus.ARCHIVED) {
             return Response.status(Response.Status.CONFLICT)
                     .entity(errorResponse("L'annonce doit être archivée avant d'être supprimée. Statut actuel : "
@@ -237,7 +173,7 @@ public class AnnonceResource {
 
         try {
             annonceService.deleteAnnonce(id);
-            return Response.noContent().build(); // 204
+            return Response.noContent().build(); 
 
         } catch (Exception e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
@@ -245,23 +181,6 @@ public class AnnonceResource {
                     .build();
         }
     }
-
-    // ========== PATCH /api/annonces/{id} – Mise à jour partielle (Bonus)
-    // ==========
-
-    /**
-     * Met à jour partiellement une annonce.
-     * Seuls les champs non-null dans le DTO sont mis à jour.
-     *
-     * Résultat attendu : permet de modifier un ou plusieurs champs
-     * sans avoir à envoyer l'intégralité de la ressource (contrairement à PUT).
-     * Utile quand on veut changer uniquement le titre ou la description par
-     * exemple.
-     *
-     * @param id  identifiant de l'annonce
-     * @param dto les champs à mettre à jour (seuls les non-null seront appliqués)
-     * @return 200 OK avec le DTO mis à jour, ou 404 Not Found
-     */
     @PATCH
     @Path("/{id}")
     @Secured
@@ -276,7 +195,7 @@ public class AnnonceResource {
         Annonce existing = existingOpt.get();
 
         try {
-            // Mise à jour partielle : on ne modifie que les champs fournis (non-null)
+            
             String title = dto.getTitle() != null ? dto.getTitle() : existing.getTitle();
             String description = dto.getDescription() != null ? dto.getDescription() : existing.getDescription();
             String adress = dto.getAdress() != null ? dto.getAdress() : existing.getAdress();
@@ -299,18 +218,6 @@ public class AnnonceResource {
                     .build();
         }
     }
-
-    // ========== GET /api/annonces/user/{userId}/drafts – Annonces brouillon d'un
-    // utilisateur ==========
-
-    /**
-     * Récupère les annonces en brouillon (DRAFT) d'un utilisateur.
-     * L'utilisateur peut ainsi voir ses annonces non publiées et décider de les
-     * publier.
-     *
-     * @param userId identifiant de l'utilisateur
-     * @return 200 OK avec la liste des annonces DRAFT
-     */
     @GET
     @Path("/user/{userId}/drafts")
     @Secured
@@ -326,17 +233,6 @@ public class AnnonceResource {
                     .build();
         }
     }
-
-    // ========== PUT /api/annonces/{id}/publish – Publier une annonce ==========
-
-    /**
-     * Publie une annonce (passe son statut de DRAFT à PUBLISHED).
-     * Seules les annonces en brouillon peuvent être publiées.
-     *
-     * @param id identifiant de l'annonce
-     * @return 200 OK avec le DTO mis à jour, 404 si introuvable, 409 si conflit
-     *         métier
-     */
     @PUT
     @Path("/{id}/publish")
     @Secured
@@ -357,7 +253,7 @@ public class AnnonceResource {
 
         } catch (RuntimeException e) {
             if (e.getCause() instanceof IllegalStateException) {
-                // 409 Conflict : l'annonce n'est pas en DRAFT
+                
                 return Response.status(Response.Status.CONFLICT)
                         .entity(errorResponse(e.getCause().getMessage()))
                         .build();
@@ -367,17 +263,6 @@ public class AnnonceResource {
                     .build();
         }
     }
-
-    // ========== PUT /api/annonces/{id}/archive – Archiver une annonce ==========
-
-    /**
-     * Archive une annonce (passe son statut de PUBLISHED à ARCHIVED).
-     * Exercice 7 : L'archivage est obligatoire avant la suppression.
-     *
-     * @param id identifiant de l'annonce
-     * @return 200 OK avec le DTO mis à jour, 404 si introuvable, 409 si conflit
-     *         métier
-     */
     @PUT
     @Path("/{id}/archive")
     @Secured
@@ -407,15 +292,10 @@ public class AnnonceResource {
                     .build();
         }
     }
-
-    // ========== Utilitaires ==========
-
-    /**
-     * Construit une réponse d'erreur JSON normalisée.
-     */
     private Map<String, String> errorResponse(String message) {
         Map<String, String> error = new HashMap<>();
         error.put("error", message);
         return error;
     }
 }
+
