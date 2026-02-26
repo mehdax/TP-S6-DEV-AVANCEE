@@ -94,7 +94,7 @@ Cette séparation évite de bloquer le développement quotidien par des tests le
 
 **Solution** : Cast explicite `(long) annonce.getId()` dans les tests. À terme, il serait préférable de modifier `getId()` pour retourner `Long`.
 
-### 5. Logging – remplacement de System.out
+### 5. Logging – remplacement de System.out 
 
 **Problème** : Le code utilisait `System.out.println()` pour le logging, ce qui n'est pas structuré et ne peut pas être filtré par niveau.
 

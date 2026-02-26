@@ -1,14 +1,16 @@
 package org.univ_paris8.iut.montreuil.qdev.tp2025.gr07jeuquizz.tps6.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import java.sql.Timestamp;
-import javax.persistence.*;
-import javax.validation.constraints.*;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
+import lombok.*;
 import java.util.Date;
 
 @Entity
 @Table(name = "Annonce")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Annonce {
 
     @Id
@@ -37,27 +39,29 @@ public class Annonce {
 
     @Column(nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
-    private Date date;
+    @Builder.Default
+    private Date date = new Date();
 
     @NotNull
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 20)
+    @Builder.Default
     private AnnonceStatus status = AnnonceStatus.DRAFT;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "author_id", nullable = false)
+    @ToString.Exclude
     private User author;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "category_id", nullable = false)
+    @ToString.Exclude
     private Category category;
+
     @Version
     private Long version;
-
-    public Annonce(int id, String title, String description, String adress, String mail, Timestamp date) {
-    }
 
     @PrePersist
     protected void onCreate() {
@@ -94,96 +98,7 @@ public class Annonce {
         this.description = description;
         this.adress = adress;
         this.mail = mail;
+        this.date = new Date();
+        this.status = AnnonceStatus.DRAFT;
     }
-
-    public Annonce() {
-
-    }
-
-    
-    public int getId() {
-        return id.intValue();
-    }
-
-    public void setId(int id) {
-        this.id = (long) id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getAdress() {
-        return adress;
-    }
-
-    public void setAdress(String adress) {
-        this.adress = adress;
-    }
-
-    public String getMail() {
-        return mail;
-    }
-
-    public void setMail(String mail) {
-        this.mail = mail;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    @Override
-    public String toString() {
-        return "Annonce{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", description='" + description + '\'' +
-                ", adress='" + adress + '\'' +
-                ", mail='" + mail + '\'' +
-                ", date=" + date +
-                '}';
-    }
-
-    public void setStatus(AnnonceStatus status) {
-        this.status = status;
-    }
-
-    public AnnonceStatus getStatus() {
-        return status;
-    }
-
-    public void setAuthor(User author) {
-        this.author = author;
-    }
-
-    public User getAuthor() {
-        return author;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
-    }
-
-    public Category getCategory() {
-        return category;
-    }
-
 }
-
